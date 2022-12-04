@@ -6,10 +6,10 @@ fn main() {
 
     for line in read_lines("input/4").flatten() {
         let mut ranges: Vec<Vec<i32>> = Vec::new();
-        let elves = line.split(",");
+        let elves = line.split(',');
         for elf in elves {
             let mut r: Vec<i32> = Vec::new();
-            for s in elf.split("-") {
+            for s in elf.split('-') {
                 r.push(s.parse::<i32>().unwrap());
             }
             ranges.push(r);

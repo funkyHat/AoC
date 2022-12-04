@@ -35,5 +35,5 @@ fn priority(c: char) -> i32 {
     if c.is_uppercase() {
         return (c as i32) - 38;
     }
-    return (c as i32) - 96
+    (c as i32) - 96
 }
