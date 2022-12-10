@@ -1,8 +1,7 @@
-use std::collections::HashSet;
 use itertools::Itertools;
+use std::collections::HashSet;
 
 use rust2022::read_lines;
-
 
 fn main() {
     let mut total = 0;
@@ -20,7 +19,6 @@ fn main() {
 
     println!("{}", total);
 }
-
 
 fn priority(c: char) -> i32 {
     if c.is_uppercase() {
