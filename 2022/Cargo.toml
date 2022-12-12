@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 exitcode = "1.1.2"
 itertools = "0.10.5"
+lending-iterator = "0.1.6"
 ringbuf = "0.3.1"
