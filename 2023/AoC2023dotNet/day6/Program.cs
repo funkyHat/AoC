@@ -42,9 +42,15 @@ internal class Race
 
     private long RiskiestButtonPress(bool shortest)
     {
-        long first = 1;
-        var last = _time;
-        long mid = 0;
+        var first = _time;
+        long last = 1;
+        long mid;
+
+        if (shortest)
+        {
+            first = 1;
+            last = _time;
+        }
 
         do
         {
@@ -52,54 +58,27 @@ internal class Race
             var score = ScoreForTime(mid);
             var adjacentScore = ScoreForTime(shortest ? mid - 1 : mid + 1);
 
-            if (shortest)
+            if (adjacentScore < score)
             {
-                if (adjacentScore < score)
+                if (score < Distance)
                 {
-                    if (score < Distance)
-                    {
-                        first = mid;
-                    }
-                    else if (score > Distance && adjacentScore <= Distance)
-                    {
-                        first = mid;
-                        last = mid;
-                    }
-                    else
-                    {
-                        last = mid;
-                    }
+                    first = mid;
+                }
+                else if (score > Distance && adjacentScore <= Distance)
+                {
+                    first = mid;
+                    last = mid;
                 }
                 else
-
                 {
                     last = mid;
                 }
             }
             else
             {
-                if (adjacentScore < score)
-                {
-                    if (score < Distance)
-                    {
-                        last = mid;
-                    }
-                    else if (score > Distance && adjacentScore <= Distance)
-                    {
-                        first = mid;
-                        last = mid;
-                    }
-                    else
-                    {
-                        first = mid;
-                    }
-                }
-                else
-                {
-                    first = mid;
-                }
+                last = mid;
             }
-        } while (first < last);
+        } while (shortest ? first < last : last < first);
 
         return last;
     }
