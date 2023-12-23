@@ -62,6 +62,9 @@ internal struct MapRange
 internal class CategoryMap
 {
     private readonly List<MapRange> _mappings;
+    private long? _currentOffset;
+    private long? _currentRangeEnd;
+    private long? _currentRangeStart;
     internal string From;
     internal string To;
 
@@ -80,13 +83,29 @@ internal class CategoryMap
             var (to, from, length) = (numbers[0], numbers[1], numbers[2]);
             _mappings.Add(new MapRange(from, from + length, length, to - from));
         }
+
+        _mappings = _mappings.OrderBy(m => m.From).ToList();
+    }
+
+    public override string ToString()
+    {
+        return $"CategoryMap({From}, {To}";
     }
 
     internal long DoMap(long start)
     {
+        if (_currentOffset.HasValue && _currentRangeStart.HasValue && _currentRangeEnd.HasValue)
+            if (_currentRangeStart.Value <= start && start <= _currentRangeEnd)
+                return start + _currentOffset.Value;
         foreach (var map in _mappings)
             if (map.From <= start && start <= map.To)
+            {
+                _currentRangeStart = map.From;
+                _currentRangeEnd = map.To;
+                _currentOffset = map.Offset;
+
                 return start + map.Offset;
+            }
 
         return start;
     }
