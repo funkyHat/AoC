@@ -21,25 +21,21 @@ internal static partial class Program
     private static int TotalScratchcards(IEnumerable<string> cards)
     {
         var total = 0;
-        var cardsByNumber = cards.Select(x=> new CardDetails(x)).ToDictionary(x => x.CardNumber, x => x);
+        var cardsByNumber = cards.Select(x => new CardDetails(x)).ToDictionary(x => x.CardNumber, x => x);
         var queue = new Queue<CardDetails>();
-        foreach (var (_, card) in cardsByNumber)
-        {
-            queue.Enqueue(card);
-        }
+        foreach (var (_, card) in cardsByNumber) queue.Enqueue(card);
 
-        while (queue.Count>0)
+        while (queue.Count > 0)
         {
             var card = queue.Dequeue();
             total++;
-            for (var i = card.CardNumber + 1; i < card.CardNumber + card.OurWins+1; i++)
-            {
+            for (var i = card.CardNumber + 1; i < card.CardNumber + card.OurWins + 1; i++)
                 queue.Enqueue(cardsByNumber[i]);
-            }
         }
 
         return total;
     }
+
     public struct CardDetails
     {
         public CardDetails(string card)

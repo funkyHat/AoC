@@ -3,7 +3,7 @@
 var file = Path.Combine(Environment.CurrentDirectory, "input/1");
 var document = File.ReadLines(file);
 IEnumerable<string> lines = document as string[] ?? document.ToArray();
-int sum = lines.Sum(GetValue);
+var sum = lines.Sum(GetValue);
 
 Console.WriteLine(sum);
 
@@ -12,7 +12,7 @@ sum = lines.Sum(GetValuePart2);
 Console.WriteLine(sum);
 
 
-public static partial class Program
+internal static partial class Program
 {
     private static readonly Dictionary<string, string> Numbers = new()
     {
@@ -41,8 +41,8 @@ public static partial class Program
     {
         var matches = Regex.Matches(line, @$"(?=(\d|{NumbersPattern}))");
 
-        string first = GetDigit(matches.First().Groups[1].Value);
-        string last = GetDigit(matches.Last().Groups[1].Value);
+        var first = GetDigit(matches[0].Groups[1].Value);
+        var last = GetDigit(matches[^1].Groups[1].Value);
 
         return int.Parse(first + last);
     }
