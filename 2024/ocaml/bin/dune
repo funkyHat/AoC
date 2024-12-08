@@ -1,0 +1,3 @@
+(executables
+ (names d1 d2 d3)
+ (libraries common core re))
